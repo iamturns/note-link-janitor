@@ -1,3 +1,11 @@
+My changes:
+
+- Rename "Backlinks" to "Links to this note"
+- Remove context, only use a simple list of links
+- Only show one-way backlinks
+
+---
+
 # note-link-janitor
 
 This script reads in a folder of Markdown files, notes all the [[wiki-style links]] between them, then adds a special "backlinks" section which lists passages which reference a given file.

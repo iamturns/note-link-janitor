@@ -33,14 +33,28 @@ import updateBacklinks from "./lib/updateBacklinks";
   await Promise.all(
     Object.keys(notes).map(async (notePath) => {
       const backlinks = linkMap.get(notes[notePath].title);
+
+      // START MT HACKS
+      const note = notes[notePath];
+      const oneWayBacklinks = new Map();
+      backlinks?.forEach((backlink, backlinkTitle) => {
+        const hasExistingLink = note.links.some((link) => {
+          return link.targetTitle === backlinkTitle;
+        });
+        if (!hasExistingLink) {
+          oneWayBacklinks.set(backlinkTitle, backlink);
+        }
+      });
+      // END MT HACKS
+
       const newContents = updateBacklinks(
         notes[notePath].parseTree,
         notes[notePath].noteContents,
-        backlinks
-          ? [...backlinks.keys()]
-              .map(sourceTitle => ({
+        oneWayBacklinks
+          ? [...oneWayBacklinks.keys()]
+              .map((sourceTitle) => ({
                 sourceTitle,
-                context: backlinks.get(sourceTitle)!
+                context: oneWayBacklinks.get(sourceTitle)!,
               }))
               .sort(
                 (

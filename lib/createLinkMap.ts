@@ -12,6 +12,10 @@ export default function createLinkMap(notes: Note[]) {
         backlinkEntryMap = new Map();
         linkMap.set(targetTitle, backlinkEntryMap);
       }
+      const context = []; //MT hackz, see below
+      backlinkEntryMap.set(note.title, context);
+      // MT: Do not include context, just want a very simple backlinks listing
+      /*
       let contextList = backlinkEntryMap.get(note.title);
       if (!contextList) {
         contextList = [];
@@ -20,6 +24,7 @@ export default function createLinkMap(notes: Note[]) {
       if (link.context) {
         contextList.push(link.context);
       }
+      */
     }
   }
 
