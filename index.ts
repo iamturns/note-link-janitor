@@ -36,25 +36,30 @@ import updateBacklinks from "./lib/updateBacklinks";
 
       // START MT HACKS
       const note = notes[notePath];
-      const oneWayBacklinks = new Map();
+      const turnsBacklinks = new Map();
       backlinks?.forEach((backlink, backlinkTitle) => {
+        const isIndex = backlinkTitle === "\\_Index";
+        if (isIndex) {
+          return;
+        }
         const hasExistingLink = note.links.some((link) => {
           return link.targetTitle === backlinkTitle;
         });
-        if (!hasExistingLink) {
-          oneWayBacklinks.set(backlinkTitle, backlink);
+        if (hasExistingLink) {
+          return true;
         }
+        turnsBacklinks.set(backlinkTitle, backlink);
       });
       // END MT HACKS
 
       const newContents = updateBacklinks(
         notes[notePath].parseTree,
         notes[notePath].noteContents,
-        oneWayBacklinks
-          ? [...oneWayBacklinks.keys()]
+        turnsBacklinks
+          ? [...turnsBacklinks.keys()]
               .map((sourceTitle) => ({
                 sourceTitle,
-                context: oneWayBacklinks.get(sourceTitle)!,
+                context: turnsBacklinks.get(sourceTitle)!,
               }))
               .sort(
                 (

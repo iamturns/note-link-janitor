@@ -4,6 +4,7 @@ Forked. My changes:
 - Remove context, only use a simple list of links
 - Only show one-way backlinks
 - Use lists with a "-" dash rather than an "\*" asterisk
+- Do not list index file in backlinks
 
 ---
 
