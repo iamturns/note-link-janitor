@@ -31,7 +31,7 @@ import updateBacklinks from "./lib/updateBacklinks";
   });
 
   await Promise.all(
-    Object.keys(notes).map(async notePath => {
+    Object.keys(notes).map(async (notePath) => {
       const backlinks = linkMap.get(notes[notePath].title);
       const newContents = updateBacklinks(
         notes[notePath].parseTree,

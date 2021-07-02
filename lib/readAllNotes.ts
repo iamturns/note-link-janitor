@@ -9,7 +9,7 @@ import processor from "./processor";
 
 const missingTitleSentinel = { type: "missingTitle" } as const;
 
-const headingFinder = processor().use(() => tree =>
+const headingFinder = processor().use(() => (tree) =>
   find(tree, { type: "heading", depth: 1 }) || missingTitleSentinel
 );
 interface Note {
@@ -21,7 +21,7 @@ interface Note {
 
 async function readNote(notePath: string): Promise<Note> {
   const noteContents = await fs.promises.readFile(notePath, {
-    encoding: "utf-8"
+    encoding: "utf-8",
   });
 
   const parseTree = processor.parse(noteContents) as MDAST.Root;
@@ -32,7 +32,7 @@ async function readNote(notePath: string): Promise<Note> {
   const title = remark()
     .stringify({
       type: "root",
-      children: (headingNode as MDAST.Heading).children
+      children: (headingNode as MDAST.Heading).children,
     })
     .trimEnd();
 
@@ -43,14 +43,19 @@ export default async function readAllNotes(
   noteFolderPath: string
 ): Promise<{ [key: string]: Note }> {
   const noteDirectoryEntries = await fs.promises.readdir(noteFolderPath, {
-    withFileTypes: true
+    withFileTypes: true,
   });
   const notePaths = noteDirectoryEntries
-    .filter(entry => entry.isFile() && !entry.name.startsWith(".") && entry.name.endsWith(".md"))
-    .map(entry => path.join(noteFolderPath, entry.name));
+    .filter(
+      (entry) =>
+        entry.isFile() &&
+        !entry.name.startsWith(".") &&
+        entry.name.endsWith(".md")
+    )
+    .map((entry) => path.join(noteFolderPath, entry.name));
 
   const noteEntries = await Promise.all(
-    notePaths.map(async notePath => [notePath, await readNote(notePath)])
+    notePaths.map(async (notePath) => [notePath, await readNote(notePath)])
   );
   return Object.fromEntries(noteEntries);
 }

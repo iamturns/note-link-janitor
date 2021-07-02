@@ -13,7 +13,7 @@ const blockTypes = [
   "list",
   "table",
   "html",
-  "code"
+  "code",
 ];
 
 function isBlockContent(node: MDAST.Content): node is MDAST.BlockContent {
@@ -33,12 +33,12 @@ export default function getNoteLinks(tree: MDAST.Root): NoteLinkEntry[] {
     searchedChildren = tree.children
       .slice(
         0,
-        tree.children.findIndex(n => n === backlinksInfo.start)
+        tree.children.findIndex((n) => n === backlinksInfo.start)
       )
       .concat(
         tree.children.slice(
           backlinksInfo.until
-            ? tree.children.findIndex(n => n === backlinksInfo.until)
+            ? tree.children.findIndex((n) => n === backlinksInfo.until)
             : tree.children.length
         )
       );
@@ -56,7 +56,7 @@ export default function getNoteLinks(tree: MDAST.Root): NoteLinkEntry[] {
       );
       links.push({
         targetTitle: ((node as unknown) as WikiLinkNode).data.alias,
-        context: closestBlockLevelAncestor
+        context: closestBlockLevelAncestor,
       });
       return true;
     }

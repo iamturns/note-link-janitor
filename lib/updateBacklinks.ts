@@ -36,7 +36,7 @@ export default function updateBacklinks(
 
   let backlinksString = "";
   if (backlinks.length > 0) {
-    const backlinkNodes: MDAST.ListItem[] = backlinks.map(entry => ({
+    const backlinkNodes: MDAST.ListItem[] = backlinks.map((entry) => ({
       type: "listItem",
       spread: false,
       children: [
@@ -46,21 +46,21 @@ export default function updateBacklinks(
             ({
               type: "wikiLink",
               value: entry.sourceTitle,
-              data: { alias: entry.sourceTitle }
-            } as unknown) as MDAST.PhrasingContent
-          ]
+              data: { alias: entry.sourceTitle },
+            } as unknown) as MDAST.PhrasingContent,
+          ],
         },
         {
           type: "list",
           ordered: false,
           spread: false,
-          children: entry.context.map(block => ({
+          children: entry.context.map((block) => ({
             type: "listItem",
             spread: false,
-            children: [block]
-          }))
-        }
-      ]
+            children: [block],
+          })),
+        },
+      ],
     }));
     const backlinkContainer = {
       type: "root",
@@ -69,16 +69,17 @@ export default function updateBacklinks(
           type: "list",
           ordered: false,
           spread: false,
-          children: backlinkNodes
-        }
-      ]
+          children: backlinkNodes,
+        },
+      ],
     };
-    backlinksString = `## Backlinks\n${backlinks
+    backlinksString = `## Links to this note\n${backlinks
       .map(
-        entry =>
+        (entry) =>
           `* [[${entry.sourceTitle}]]\n${entry.context
             .map(
-              block => `\t* ${processor.stringify(block).replace(/\n.+/, "")}\n`
+              (block) =>
+                `\t* ${processor.stringify(block).replace(/\n.+/, "")}\n`
             )
             .join("")}`
       )

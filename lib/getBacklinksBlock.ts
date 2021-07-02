@@ -23,26 +23,30 @@ export default function getBacklinksBlock(
     (node: UNIST.Node): node is MDAST.Heading =>
       is(node, {
         type: "heading",
-        depth: 2
-      }) && is((node as MDAST.Heading).children[0], { value: "Backlinks" })
+        depth: 2,
+      }) &&
+      is((node as MDAST.Heading).children[0], { value: "Links to this note" })
   );
   if (existingBacklinksNodeIndex === -1) {
     const insertionPoint =
-      tree.children.slice().reverse().find(node => is(node, isClosingMatterNode)) || null;
+      tree.children
+        .slice()
+        .reverse()
+        .find((node) => is(node, isClosingMatterNode)) || null;
     return {
       isPresent: false,
-      insertionPoint
+      insertionPoint,
     };
   } else {
     const followingNode =
       tree.children
         .slice(existingBacklinksNodeIndex + 1)
-        .find(node => is(node, [{ type: "heading" }, isClosingMatterNode])) ||
+        .find((node) => is(node, [{ type: "heading" }, isClosingMatterNode])) ||
       null;
     return {
       isPresent: true,
       start: tree.children[existingBacklinksNodeIndex],
-      until: followingNode
+      until: followingNode,
     };
   }
 }
