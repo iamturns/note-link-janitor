@@ -74,15 +74,7 @@ export default function updateBacklinks(
       ],
     };
     backlinksString = `## Links to this note\n${backlinks
-      .map(
-        (entry) =>
-          `* [[${entry.sourceTitle}]]\n${entry.context
-            .map(
-              (block) =>
-                `\t* ${processor.stringify(block).replace(/\n.+/, "")}\n`
-            )
-            .join("")}`
-      )
+      .map((entry) => `- [[${entry.sourceTitle}]]`)
       .join("")}\n`;
   }
 

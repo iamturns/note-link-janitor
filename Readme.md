@@ -1,8 +1,9 @@
-My changes:
+Forked. My changes:
 
 - Rename "Backlinks" to "Links to this note"
 - Remove context, only use a simple list of links
 - Only show one-way backlinks
+- Use lists with a "-" dash rather than an "\*" asterisk
 
 ---
 
