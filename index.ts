@@ -38,7 +38,7 @@ import updateBacklinks from "./lib/updateBacklinks";
       const note = notes[notePath];
       const turnsBacklinks = new Map();
       backlinks?.forEach((backlink, backlinkTitle) => {
-        const isIndex = backlinkTitle === "\\_Index";
+        const isIndex = backlinkTitle === "! Index";
         if (isIndex) {
           return;
         }
